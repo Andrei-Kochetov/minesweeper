@@ -11,8 +11,6 @@ function setBomb (countBomb) {
     while (currCountBomb) {
       const x = Math.floor(Math.random()* fieldWidth);
       const y = Math.floor(Math.random()* fieldHeight);
-        //console.log(x)
-        //console.log(y)
       const fieldElem = field[y][x];
   
       if (fieldElem === 0) {
@@ -21,7 +19,15 @@ function setBomb (countBomb) {
       }
     }
   }
-
+export function openAllBomb(){
+  field.forEach((fieldRow) => {
+    fieldRow.forEach((fieldElement) => {
+      if(fieldElement.checkBomb){
+        fieldElement.openCell()
+      }
+    });
+  });
+}
 export function getRoundNeighbors(coord) {
     const { x, y } = coord;
 

@@ -1,4 +1,4 @@
-import { getRoundNeighbors } from "./field";
+import { getRoundNeighbors, openAllBomb } from "./field";
 
 const fieldHtml = document.createElement('div');
 fieldHtml.classList.add('fieldHtml')
@@ -9,60 +9,39 @@ class Cell{
         this.checkBomb = checkBomb;
         this.coord = coord;
     }
-    createCellOnField() {
-        const cellElem = document.createElement("div");
-        cellElem.classList.add("cell");
-        cellElem.classList.add("cell__start");
-    
-        fieldHtml.appendChild(cellElem);
 
-        this.cellElem = cellElem;
-        this.cellElem.addEventListener("click", () => this.onCellClick());
-        this.cellElem.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            this.onCellRightClick()
-        });
-        
-
-      }
-    onCellClick() {
-        if(this.cellElem.innerHTML === "🚩"){
-            this.cellElem.innerHTML = ""
-        }
-        if(this.checkBomb){
-           this.cellElem.innerHTML = "💣"; 
-        } 
-        if(!this.checkBomb){
-            getRoundNeighbors(this.coord)
-        } 
-        
-        this.setValueNumber();
-        this.openCell();
-
+    setIsOpen(isOpen){
+        this.isOpen = isOpen;
     }
-    onCellRightClick() {
-        if(this.cellElem.innerHTML === "🚩"){
-            this.cellElem.innerHTML = ""
-        } else if (this.cellElem.innerHTML === "💣"){
-            return;
-        } else{
-            this.cellElem.innerHTML = "🚩"
-        }
+    setValue(value){
+        this.value = value;
     }
+    setFlag(isFlag) {
+        this.isFlag = isFlag;
+        this.cellElem.innerHTML = isFlag ? "📍" : "";
+    }
+
+    showValueCell(){
+        this.cellElem.textContent = this.value || '' ;
+    }
+      
     openCell(){
-        this.cellElem.innerHtml = this.valueNumber || '';
-        this.cellElem.classList.remove('cell__start')
+        this.isOpen = true ;
+        this.cellElem.classList.remove('cell__start');
+        this.showValueCell()
+
     }
-    setValue(valueNumber){
-        this.valueNumber = valueNumber;
-    }
-    setValueNumber(){
+
+    setTypeValue(){
+        if(this.checkBomb){
+            this.setValue('🧨') 
+            return;
+        }
+
         const neighbors = getRoundNeighbors(this.coord);
         let bombCount = 0;
-        //console.log(neighbors)
         neighbors.forEach((neighbor) => {
-            console.log(neighbor)
-          if ( neighbor.checkBomb) {
+          if ( neighbor === 1 || neighbor.checkBomb) {
             bombCount++;
           }
         });
@@ -71,12 +50,74 @@ class Cell{
           this.setValue(bombCount);
         }
     }
+
+
+    onCellRightClick() {
+        if(this.isFlag){
+        this.setFlag(false);
+        } else{
+            this.setFlag(true);
+        }
+    }
+
+
+    onCellClick(openNumber = false) {
+        if(this.isFlag){
+
+            this.setFlag(false);
+
+            return;
+
+        } else if(!this.value && !this.isOpen){
+
+            this.openCell();
+
+            const neighbors = getRoundNeighbors(this.coord);
+
+            neighbors.forEach((neighbor) => {
+
+                if ( !neighbor.isOpen ) {
+                    neighbor.onCellClick(true)
+                }
+
+            });
+
+        } else if((this.value && openNumber) || typeof this.value === "number"){
+
+            this.openCell()
+
+        } else if(this.checkBomb){
+
+            openAllBomb();
+
+        } 
+        
+        this.showValueCell()
+
+    }
+   
+
+    createCellOnField() {
+        const cellElem = document.createElement("div");
+        cellElem.classList.add("cell");
+        cellElem.classList.add("cell__start");
+
+        this.cellElem = cellElem;
+        this.cellElem.addEventListener("click", () => this.onCellClick());
+        this.cellElem.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            this.onCellRightClick()
+        });
+        
+        fieldHtml.appendChild(cellElem);
+      }
   
 }
 
 
 export function createCell(checkBomb, coord){
-    const newCell = new Cell(checkBomb, coord)
+    const newCell = new Cell(checkBomb, coord);
+    newCell.setTypeValue()
     newCell.createCellOnField()
     return newCell
 }
