@@ -1,8 +1,8 @@
 import { getRoundNeighbors, openAllBomb } from "./field";
 
 const fieldHtml = document.createElement('div');
-fieldHtml.classList.add('fieldHtml')
-document.body.appendChild(fieldHtml)
+fieldHtml.classList.add('fieldHtml');
+document.body.appendChild(fieldHtml);
 
 class Cell{
     constructor(checkBomb, coord ){
@@ -22,7 +22,7 @@ class Cell{
     }
 
     showValueCell(){
-        this.cellElem.textContent = this.value || '' ;
+        this.cellElem.innerHTML = this.value || '' ;
     }
       
     openCell(){
@@ -120,4 +120,11 @@ export function createCell(checkBomb, coord){
     newCell.setTypeValue()
     newCell.createCellOnField()
     return newCell
+}
+export function clearField(){
+   fieldHtml.innerHTML = '';
+ }
+
+export function widthField(width){
+    fieldHtml.style.maxWidth = `calc(40px * ${width})`;
 }

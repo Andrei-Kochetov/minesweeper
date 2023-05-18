@@ -1,4 +1,4 @@
-import {createCell} from './cell'
+import {createCell, widthField} from './cell'
 
 let field = [];
 
@@ -28,6 +28,7 @@ export function openAllBomb(){
     });
   });
 }
+
 export function getRoundNeighbors(coord) {
     const { x, y } = coord;
 
@@ -53,14 +54,21 @@ export function createField(width = 10, height = 10, countBomb = 10) {
   setBomb(countBomb)
     
   
+
   field.forEach((fieldRow, y) => {
     fieldRow.forEach((fieldElement, x) => {
       const newCell = createCell(Boolean(fieldElement), { x, y });
-      //console.log(field[y][x])
       field[y][x] = newCell;
     });
   });
-  //console.log(field)
+  widthField(width)
 
 }
 
+export function clearField(){
+   field.forEach((fieldRow, y) => {
+    fieldRow.forEach((fieldElement, x) => {
+      fieldElement.remove()
+    });
+  }); 
+}
