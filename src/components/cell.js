@@ -1,4 +1,5 @@
-import { getRoundNeighbors, openAllBomb } from "./field";
+import { getRoundNeighbors, openAllBomb, win } from "./field";
+import {minesCount, clickCount, startTimer} from '../style'
 
 const fieldHtml = document.createElement('div');
 fieldHtml.classList.add('fieldHtml');
@@ -49,14 +50,17 @@ class Cell{
         if (bombCount) {
           this.setValue(bombCount);
         }
+
     }
 
 
     onCellRightClick() {
         if(this.isFlag){
         this.setFlag(false);
-        } else{
+        minesCount.textContent = +minesCount.textContent + 1
+        } else if(!this.isOpen){
             this.setFlag(true);
+            minesCount.textContent = +minesCount.textContent - 1
         }
     }
 
@@ -65,7 +69,7 @@ class Cell{
         if(this.isFlag){
 
             this.setFlag(false);
-
+            minesCount.textContent = +minesCount.textContent + 1
             return;
 
         } else if(!this.value && !this.isOpen){
@@ -89,11 +93,12 @@ class Cell{
         } else if(this.checkBomb){
 
             openAllBomb();
+            
 
         } 
-        
-        this.showValueCell()
 
+        this.showValueCell()
+        win();
     }
    
 
@@ -102,12 +107,22 @@ class Cell{
         cellElem.classList.add("cell");
         cellElem.classList.add("cell__start");
 
+  
+
         this.cellElem = cellElem;
-        this.cellElem.addEventListener("click", () => this.onCellClick());
+        this.cellElem.addEventListener("click", () => {
+            clickCount.textContent = +clickCount.textContent + 1; 
+            startTimer()
+            this.onCellClick()
+        });
         this.cellElem.addEventListener("contextmenu", (e) => {
             e.preventDefault();
             this.onCellRightClick()
         });
+
+        if( typeof this.value === 'number'){
+            cellElem.classList.add(`color-number-${this.value}`);
+        }
         
         fieldHtml.appendChild(cellElem);
       }
@@ -128,3 +143,4 @@ export function clearField(){
 export function widthField(width){
     fieldHtml.style.maxWidth = `calc(40px * ${width})`;
 }
+

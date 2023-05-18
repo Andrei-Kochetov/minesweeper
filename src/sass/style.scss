@@ -3,7 +3,7 @@
 }
 
 .fieldHtml{
-    margin: 0 auto ;
+    margin: 10px auto 0;
     max-width: calc(40px * 10);
     max-height: calc(40px * 10);
     display: flex;
@@ -17,6 +17,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    font-size: 20px;
 
     &__start {
         background-color: rgb(243, 80, 80);
@@ -42,9 +44,12 @@
 
 .menu{
     width: 400px;
-    margin: 100px auto 0;
+    margin: 30px auto 0;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    column-gap: 15px;
+    row-gap: 10px;
 
 }
 .slidecontainer{
@@ -57,3 +62,43 @@
     align-items: center;
 }
 
+
+.wrapperMinesCount, .wrapperClickCount, .wrapperTimer{
+    font-size: 20px;
+    display: flex;
+    column-gap: 10px;
+    justify-self: center;
+    align-items: center;
+}
+
+.color-number-1 {
+    color: blue;
+}
+
+.color-number-2 {
+    color: green;
+}
+
+.color-number-3 {
+    color: red;
+}
+
+.color-number-4 {
+    color: darkblue;
+}
+
+.color-number-5 {
+    color: brown;
+}
+
+.color-number-6 {
+    color: turquoise;
+}
+
+.color-number-7 {
+    color: black;
+}
+
+.color-number-8 {
+    color: white;
+}

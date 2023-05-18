@@ -9,10 +9,58 @@ form.innerHTML = '<select id="select"><option value="10">Easy</option><option va
 
 const wrapperRange = document.createElement('div');
 wrapperRange.classList.add('slidecontainer')
-wrapperRange.innerHTML = '<input type="range" min="1" max="100" value="10" class="slider" id="myRange"> <div id="demo"></div>';
+wrapperRange.innerHTML = '<input type="range" min="10" max="99" value="10" class="slider" id="myRange"> <div id="demo"></div>';
+
+const wrapperMinesCount = document.createElement('div');
+wrapperMinesCount.classList.add('wrapperMinesCount')
+wrapperMinesCount.innerHTML = '<div>🧨</div>'
+export const minesCount = document.createElement('div');
+minesCount.textContent = 10;
+wrapperMinesCount.appendChild(minesCount)
+
+const wrapperClickCount = document.createElement('div');
+wrapperClickCount.classList.add('wrapperClickCount')
+wrapperClickCount.innerHTML = '<div>Ходы:</div>'
+export const clickCount = document.createElement('div');
+clickCount.textContent = 0;
+wrapperClickCount.appendChild(clickCount)
+
+const wrapperTimer = document.createElement('div');
+wrapperTimer.classList.add('wrapperTimer')
+wrapperTimer.innerHTML = '<div>Время:</div>'
+let timer = document.createElement('div');
+timer.textContent = 0;
+wrapperTimer.appendChild(timer)
+
+let timerId;
+export function startTimer(){
+    if(clickCount.textContent == 1 ){
+        timerId = setInterval(()=>{
+        timer.textContent = +timer.textContent + 1
+    }, 1000) 
+}
+}
+
+
+const restart = document.createElement('button');
+restart.innerHTML = 'Начать заново';
+restart.onclick = function() {
+    minesCount.textContent = slider.value;
+    clickCount.textContent = 0;
+    stopAndClearTimer();
+    clearField();
+    createField(cellValue,cellValue, minesValue )
+}
+
+
 
 menu.appendChild(wrapperRange);
 menu.appendChild(form);
+menu.appendChild(wrapperTimer);
+menu.appendChild(restart);
+menu.appendChild(wrapperMinesCount);
+menu.appendChild(wrapperClickCount);
+
 
 
 document.body.prepend(menu);
@@ -26,6 +74,9 @@ output.innerHTML = slider.value;
 slider.onchange = function() {
     output.innerHTML = this.value;
     minesValue = this.value;
+    minesCount.textContent = this.value;
+    clickCount.textContent = 0;
+    stopAndClearTimer();
     clearField();
     createField(cellValue,cellValue, minesValue);
 }
@@ -34,8 +85,14 @@ slider.onchange = function() {
 const select = document.getElementById("select");
 select.oninput = function() {
     cellValue = this.value;
+    clickCount.textContent = 0;
+    stopAndClearTimer();
     clearField();
     createField(cellValue,cellValue, minesValue )
+}
+function stopAndClearTimer(){
+    clearInterval(timerId)
+    timer.textContent = 0;
 }
 
 

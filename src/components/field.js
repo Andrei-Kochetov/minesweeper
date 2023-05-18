@@ -22,11 +22,36 @@ function setBomb (countBomb) {
 export function openAllBomb(){
   field.forEach((fieldRow) => {
     fieldRow.forEach((fieldElement) => {
-      if(fieldElement.checkBomb){
+      /* if(fieldElement.checkBomb){
         fieldElement.openCell()
+      } */
+      fieldElement.openCell()
+    });
+  });
+  alert('Игра окончена');
+}
+
+export function win(){
+  let countCloseCell = 0;
+  let countCloseMine = 0;
+  field.forEach((fieldRow) => {
+    fieldRow.forEach((fieldElement) => { 
+      if(!fieldElement.isOpen){
+        countCloseCell++
+      }
+      if(fieldElement.checkBomb){
+        countCloseMine++
       }
     });
   });
+  if(countCloseCell === countCloseMine ){
+/*     field.forEach((fieldRow) => {
+      fieldRow.forEach((fieldElement) => {
+        fieldElement.openCell()
+      });
+    }); */
+    alert('Ты выиграл!')
+  }
 }
 
 export function getRoundNeighbors(coord) {
@@ -65,7 +90,7 @@ export function createField(width = 10, height = 10, countBomb = 10) {
 
 }
 
-export function clearField(){
+ function clearField(){
    field.forEach((fieldRow, y) => {
     fieldRow.forEach((fieldElement, x) => {
       fieldElement.remove()
