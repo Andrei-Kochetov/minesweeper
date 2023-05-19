@@ -2,6 +2,7 @@ import './sass/style.scss';
 import {createField} from './components/field';
 import {clearField} from './components/cell'
 
+
 const menu = document.createElement('div');
 menu.classList.add('menu')
 const form = document.createElement('form');
@@ -52,7 +53,23 @@ restart.onclick = function() {
     createField(cellValue,cellValue, minesValue )
 }
 
+//const body = document.querySelector('body');
 
+const theme = document.createElement('button');
+theme.innerHTML = 'Сменить цвет сайта ';
+
+
+theme.onclick = function() {
+    document.body.classList.toggle('bc-body');
+    document.querySelectorAll('.cell').forEach(el=>{
+        el.classList.toggle('cell_dark'); 
+    })
+    document.querySelectorAll('button').forEach(el=>{
+        el.classList.toggle('btn-color');
+    })
+    document.querySelector('select').classList.toggle('btn-color');
+    
+}
 
 menu.appendChild(wrapperRange);
 menu.appendChild(form);
@@ -60,6 +77,7 @@ menu.appendChild(wrapperTimer);
 menu.appendChild(restart);
 menu.appendChild(wrapperMinesCount);
 menu.appendChild(wrapperClickCount);
+menu.appendChild(theme);
 
 
 
