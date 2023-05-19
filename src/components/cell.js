@@ -1,4 +1,4 @@
-import { getRoundNeighbors, openAllBomb, win } from "./field";
+import { getRoundNeighbors, openAllBomb, win/* , replaceBomb  */} from "./field";
 import {minesCount, clickCount, startTimer} from '../style'
 
 const fieldHtml = document.createElement('div');
@@ -66,6 +66,7 @@ class Cell{
 
 
     onCellClick(openNumber = false) {
+        /* replaceBomb(); */
         if(this.isFlag){
 
             this.setFlag(false);

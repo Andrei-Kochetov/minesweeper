@@ -28,7 +28,7 @@ wrapperClickCount.appendChild(clickCount)
 const wrapperTimer = document.createElement('div');
 wrapperTimer.classList.add('wrapperTimer')
 wrapperTimer.innerHTML = '<div>Время:</div>'
-let timer = document.createElement('div');
+export let timer = document.createElement('div');
 timer.textContent = 0;
 wrapperTimer.appendChild(timer)
 
@@ -93,8 +93,11 @@ select.oninput = function() {
 function stopAndClearTimer(){
     clearInterval(timerId)
     timer.textContent = 0;
-}
 
+}
+export function stopTimer(){
+    clearInterval(timerId)   
+}
 
 
 createField()

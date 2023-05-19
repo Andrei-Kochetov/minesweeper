@@ -1,6 +1,8 @@
 import {createCell, widthField} from './cell'
+import {stopTimer, clickCount, timer} from '../style'
 
 let field = [];
+
 
 function setBomb (countBomb) {
     let currCountBomb = countBomb;
@@ -28,7 +30,9 @@ export function openAllBomb(){
       fieldElement.openCell()
     });
   });
-  alert('Игра окончена');
+  
+  showLose();
+  stopTimer();
 }
 
 export function win(){
@@ -50,7 +54,9 @@ export function win(){
         fieldElement.openCell()
       });
     }); */
-    alert('Ты выиграл!')
+   
+    showWin();
+    stopTimer();
   }
 }
 
@@ -71,6 +77,10 @@ export function getRoundNeighbors(coord) {
         (item) => typeof item !== "undefined"
     );
 }
+
+
+
+
 export function createField(width = 10, height = 10, countBomb = 10) {
   field = Array.from({ length: height }, () =>
     Array.from({ length: width }, () => 0)
@@ -86,14 +96,45 @@ export function createField(width = 10, height = 10, countBomb = 10) {
       field[y][x] = newCell;
     });
   });
+
   widthField(width)
 
-}
 
+}
+/* 
+export function replaceBomb(){
+  field.forEach((fieldRow, y) => {
+    fieldRow.forEach((fieldElement, x) => {
+      if(clickCount.textContent == 1 && fieldElement.checkBomb){
+        setBomb(countBomb);
+        
+        field.forEach((fieldRow, y) => {
+          fieldRow.forEach((fieldElement, x) => {
+            const newCell = createCell(Boolean(fieldElement), { x, y });
+            field[y][x] = newCell;
+          });
+        });
+      }
+    });
+  }); 
+} */
  function clearField(){
    field.forEach((fieldRow, y) => {
     fieldRow.forEach((fieldElement, x) => {
       fieldElement.remove()
     });
   }); 
+
 }
+
+function showLose(){
+  alert(`Ты проиграл, не расстраивайся!
+Время игры: ${timer.textContent} секунд
+Количество ходов: ${clickCount.textContent}`)
+}
+function showWin(){
+  alert(`Ты выиграл, поздравляю!
+Время игры: ${timer.textContent} секунд
+Количество ходов: ${clickCount.textContent}`)
+}
+
