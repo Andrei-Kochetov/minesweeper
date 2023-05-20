@@ -1,8 +1,8 @@
 import {createCell, widthField} from './cell'
-import {stopTimer, clickCount, timer} from '../style'
+import {stopTimer, clickCount, timer, leaderBoard } from '../style'
 
 let field = [];
-
+let leaderBoardArr = [];
 
 function setBomb (countBomb) {
     let currCountBomb = countBomb;
@@ -54,9 +54,10 @@ export function win(){
         fieldElement.openCell()
       });
     }); */
-   
+    
     showWin();
     stopTimer();
+    saveWinResult();
   }
 }
 
@@ -97,7 +98,8 @@ export function createField(width = 10, height = 10, countBomb = 10) {
     });
   });
 
-  widthField(width)
+  widthField(width);
+
 
 
 }
@@ -136,5 +138,33 @@ function showWin(){
   alert(`Ты выиграл, поздравляю!
 Время игры: ${timer.textContent} секунд
 Количество ходов: ${clickCount.textContent}`)
+}
+
+function saveWinResult(){
+  let currResultWin = {
+    Ходы: clickCount.textContent,
+    Время : timer.textContent,
+  }
+  leaderBoardArr.push(currResultWin)
+  //console.log(leaderBoardArr)
+  if(leaderBoardArr.length > 10){
+    leaderBoardArr.shift();
+  };
+  for(let i = 0; i<leaderBoardArr.length; i++){
+      localStorage.setItem(`${i + 1}`, JSON.stringify(leaderBoardArr[i]))
+  }
+  showWinResult()
+}
+export function showWinResult(){
+    leaderBoard.innerText = '';
+    leaderBoardArr = [];
+    for(let i = 0; i< localStorage.length; i++){
+    let itemLeaderBoard = JSON.parse(localStorage.getItem(`${i + 1}`));
+    leaderBoardArr.push(itemLeaderBoard);
+    let stingObject = `${i + 1}: Кол-во ходов: ${itemLeaderBoard['Ходы']}, Время игры: ${itemLeaderBoard['Время']}` 
+    //console.log(itemLeaderBoard)
+    //console.log(typeof itemLeaderBoard)
+    leaderBoard.innerText += stingObject + '\n';
+    }
 }
 

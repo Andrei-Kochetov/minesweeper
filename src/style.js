@@ -1,6 +1,8 @@
 import './sass/style.scss';
-import {createField} from './components/field';
+import {createField, showWinResult} from './components/field';
 import {clearField} from './components/cell'
+
+
 
 
 const menu = document.createElement('div');
@@ -10,7 +12,7 @@ form.innerHTML = '<select id="select"><option value="10">Easy</option><option va
 
 const wrapperRange = document.createElement('div');
 wrapperRange.classList.add('slidecontainer')
-wrapperRange.innerHTML = '<input type="range" min="10" max="99" value="10" class="slider" id="myRange"> <div id="demo"></div>';
+wrapperRange.innerHTML = '<input type="range" min="3" max="99" value="10" class="slider" id="myRange"> <div id="demo"></div>';
 
 const wrapperMinesCount = document.createElement('div');
 wrapperMinesCount.classList.add('wrapperMinesCount')
@@ -79,9 +81,11 @@ menu.appendChild(wrapperMinesCount);
 menu.appendChild(wrapperClickCount);
 menu.appendChild(theme);
 
-
+export const leaderBoard = document.createElement('div');
+leaderBoard.classList.add('leaderBoard')
 
 document.body.prepend(menu);
+document.body.prepend(leaderBoard);
 
 let minesValue;
 let cellValue;
@@ -119,3 +123,4 @@ export function stopTimer(){
 
 
 createField()
+showWinResult();

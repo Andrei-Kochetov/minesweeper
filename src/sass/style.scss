@@ -59,6 +59,18 @@ body{
     row-gap: 10px;
 
 }
+
+.leaderBoard{
+    width: 400px;
+    color: black;
+    min-height: 100px;
+    margin: 30px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
 .slidecontainer{
     display: flex;
     column-gap: 10px;
