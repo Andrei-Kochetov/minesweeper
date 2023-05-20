@@ -76,7 +76,9 @@ theme.onclick = function() {
         el.classList.toggle('btn-color');
     })
     document.querySelector('select').classList.toggle('btn-color');
-    
+    document.querySelector('.leaderTitle').classList.toggle('leaderTitle_dark');
+    document.querySelector('.leaderBoard').classList.toggle('leaderBoard_dark');
+
 }
 
 const muteWrapper = document.createElement('div');
@@ -198,6 +200,7 @@ export function playSoundWin(){
     }
 
 }
+
 
 createField()
 showWinResult();

@@ -24,9 +24,6 @@ function setBomb (countBomb) {
 export function openAllBomb(){
   field.forEach((fieldRow) => {
     fieldRow.forEach((fieldElement) => {
-      /* if(fieldElement.checkBomb){
-        fieldElement.openCell()
-      } */
       fieldElement.openCell()
     });
   });
@@ -49,11 +46,6 @@ export function win(){
     });
   });
   if(countCloseCell === countCloseMine ){
-/*     field.forEach((fieldRow) => {
-      fieldRow.forEach((fieldElement) => {
-        fieldElement.openCell()
-      });
-    }); */
     playSoundWin();
     showWin();
     stopTimer();
@@ -72,13 +64,11 @@ export function getRoundNeighbors(coord) {
     const n6 = field[y + 1]?.[x - 1];
     const n7 = field[y]?.[x - 1];
     const n8 = field[y - 1]?.[x - 1];
-    //console.log(n1)
 
     return [n1, n2, n3, n4, n5, n6, n7, n8].filter(
         (item) => typeof item !== "undefined"
     );
 }
-
 
 
 
@@ -89,8 +79,6 @@ export function createField(width = 10, height = 10, countBomb = 10) {
 
   setBomb(countBomb)
     
-  
-
   field.forEach((fieldRow, y) => {
     fieldRow.forEach((fieldElement, x) => {
       const newCell = createCell(Boolean(fieldElement), { x, y });
@@ -98,11 +86,12 @@ export function createField(width = 10, height = 10, countBomb = 10) {
     });
   });
 
+
   widthField(width);
-
-
+  
 
 }
+
 /* 
 export function replaceBomb(){
   field.forEach((fieldRow, y) => {
@@ -146,7 +135,7 @@ function saveWinResult(){
     Время : timer.textContent,
   }
   leaderBoardArr.push(currResultWin)
-  //console.log(leaderBoardArr)
+
   if(leaderBoardArr.length > 10){
     leaderBoardArr.shift();
   };
@@ -162,8 +151,6 @@ export function showWinResult(){
     let itemLeaderBoard = JSON.parse(localStorage.getItem(`${i + 1}`));
     leaderBoardArr.push(itemLeaderBoard);
     let stingObject = `${i + 1}: Кол-во ходов: ${itemLeaderBoard['Ходы']}, Время игры: ${itemLeaderBoard['Время']}` 
-    //console.log(itemLeaderBoard)
-    //console.log(typeof itemLeaderBoard)
     leaderBoard.innerText += stingObject + '\n';
     }
 }

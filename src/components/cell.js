@@ -145,6 +145,12 @@ export function clearField(){
  }
 
 export function widthField(width){
-    fieldHtml.style.maxWidth = `calc(40px * ${width})`;
+    if( document.documentElement.clientWidth < 780) {
+        fieldHtml.style.maxWidth = `calc(19px * ${width})`;
+        fieldHtml.style.minHeight = `calc(19px * ${width})`;
+      } else {
+        fieldHtml.style.maxWidth = `calc(30px * ${width})`;
+      }
 }
+
 

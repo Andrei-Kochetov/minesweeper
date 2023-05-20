@@ -7,14 +7,14 @@ body{
 }
 .fieldHtml{
     margin: 10px auto;
-    max-width: calc(40px * 10);
-    min-height: calc(40px * 10);
+    max-width: calc(30px * 10);
+    min-height: calc(30px * 10);
     display: flex;
     flex-wrap: wrap;
 }
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-color: rgb(97, 147, 253);
     border: 1px solid rgb(211, 210, 210);
     display: flex;
@@ -28,7 +28,7 @@ body{
 
     &__start {
         background-color: rgb(243, 80, 80);
-      border: 5px solid rgb(196, 196, 196);
+      border: 2px solid rgb(196, 196, 196);
       border-style: outset;
       cursor: pointer;
     }
@@ -68,6 +68,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    &_dark{
+        color: white;
+    }
 }
 .leaderBoard{
     width: 400px;
@@ -79,6 +82,9 @@ body{
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    &_dark{
+        color: white;
+    }
     
 }
 .slidecontainer{
@@ -139,3 +145,15 @@ body{
     color: white;
 }
 
+@media(max-width: 779px){
+    .cell {
+        width: 19px;
+        height: 19px;
+        font-size: 14px;
+    }
+/*     .fieldHtml{
+        margin: 10px auto;
+        max-width: calc(19px * 10);
+        min-height: calc(19px * 10);
+    } */
+}
