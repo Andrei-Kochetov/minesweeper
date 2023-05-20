@@ -1,5 +1,5 @@
 import {createCell, widthField} from './cell'
-import {stopTimer, clickCount, timer, leaderBoard } from '../style'
+import {stopTimer, clickCount, timer, leaderBoard,playSoundWin } from '../style'
 
 let field = [];
 let leaderBoardArr = [];
@@ -54,7 +54,7 @@ export function win(){
         fieldElement.openCell()
       });
     }); */
-    
+    playSoundWin();
     showWin();
     stopTimer();
     saveWinResult();

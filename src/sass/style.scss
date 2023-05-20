@@ -6,9 +6,9 @@ body{
 
 }
 .fieldHtml{
-    margin: 10px auto 0;
+    margin: 10px auto;
     max-width: calc(40px * 10);
-    max-height: calc(40px * 10);
+    min-height: calc(40px * 10);
     display: flex;
     flex-wrap: wrap;
 }
@@ -59,12 +59,22 @@ body{
     row-gap: 10px;
 
 }
-
+.leaderTitle{
+    width: 450px;
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    margin: 30px auto 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .leaderBoard{
     width: 400px;
     color: black;
     min-height: 100px;
-    margin: 30px auto 0;
+    font-size: 20px;
+    margin: 5px auto 0;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,5 +1,5 @@
 import { getRoundNeighbors, openAllBomb, win/* , replaceBomb  */} from "./field";
-import {minesCount, clickCount, startTimer} from '../style'
+import {minesCount, clickCount, startTimer, playSoundOnClickCell, playSoundOnClickBomb, playSoundOnRightClick} from '../style'
 
 const fieldHtml = document.createElement('div');
 fieldHtml.classList.add('fieldHtml');
@@ -67,6 +67,7 @@ class Cell{
 
     onCellClick(openNumber = false) {
         /* replaceBomb(); */
+
         if(this.isFlag){
 
             this.setFlag(false);
@@ -92,7 +93,7 @@ class Cell{
             this.openCell()
 
         } else if(this.checkBomb){
-
+            playSoundOnClickBomb();
             openAllBomb();
             
 
@@ -113,12 +114,14 @@ class Cell{
         this.cellElem = cellElem;
         this.cellElem.addEventListener("click", () => {
             clickCount.textContent = +clickCount.textContent + 1; 
+            playSoundOnClickCell()
             startTimer()
             this.onCellClick()
         });
         this.cellElem.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            this.onCellRightClick()
+            playSoundOnRightClick();
+            this.onCellRightClick();
         });
 
         if( typeof this.value === 'number'){

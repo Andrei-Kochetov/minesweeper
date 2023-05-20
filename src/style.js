@@ -1,6 +1,11 @@
 import './sass/style.scss';
 import {createField, showWinResult} from './components/field';
-import {clearField} from './components/cell'
+import {clearField} from './components/cell';
+import './assets/bomb.mp3';
+import './assets/c4.mp3';
+import './assets/hos2.mp3';
+import './assets/flag.mp3';
+import './assets/win.mp3';
 
 
 
@@ -12,7 +17,7 @@ form.innerHTML = '<select id="select"><option value="10">Easy</option><option va
 
 const wrapperRange = document.createElement('div');
 wrapperRange.classList.add('slidecontainer')
-wrapperRange.innerHTML = '<input type="range" min="3" max="99" value="10" class="slider" id="myRange"> <div id="demo"></div>';
+wrapperRange.innerHTML = '<input type="range" min="10" max="99" value="10" class="slider" id="myRange"> <div id="demo"></div>';
 
 const wrapperMinesCount = document.createElement('div');
 wrapperMinesCount.classList.add('wrapperMinesCount')
@@ -50,6 +55,7 @@ restart.innerHTML = 'Начать заново';
 restart.onclick = function() {
     minesCount.textContent = slider.value;
     clickCount.textContent = 0;
+    playSoundOnRestart();
     stopAndClearTimer();
     clearField();
     createField(cellValue,cellValue, minesValue )
@@ -73,6 +79,16 @@ theme.onclick = function() {
     
 }
 
+const muteWrapper = document.createElement('div');
+const mute = document.createElement('input');
+mute.setAttribute('type', 'checkbox');
+mute.setAttribute('id', 'mute');
+const muteLabel = document.createElement('label');
+muteLabel.setAttribute('for', 'mute');
+muteLabel.innerHTML = 'Выключить звук';
+muteWrapper.appendChild(mute);
+muteWrapper.appendChild(muteLabel);
+
 menu.appendChild(wrapperRange);
 menu.appendChild(form);
 menu.appendChild(wrapperTimer);
@@ -80,12 +96,17 @@ menu.appendChild(restart);
 menu.appendChild(wrapperMinesCount);
 menu.appendChild(wrapperClickCount);
 menu.appendChild(theme);
+menu.appendChild(muteWrapper);
 
+const leaderTitle = document.createElement('div');
+leaderTitle.classList.add('leaderTitle')
+leaderTitle.innerHTML = 'Таблица последних результатов:'
 export const leaderBoard = document.createElement('div');
 leaderBoard.classList.add('leaderBoard')
 
 document.body.prepend(menu);
-document.body.prepend(leaderBoard);
+document.body.append(leaderTitle);
+document.body.append(leaderBoard);
 
 let minesValue;
 let cellValue;
@@ -98,6 +119,7 @@ slider.onchange = function() {
     minesValue = this.value;
     minesCount.textContent = this.value;
     clickCount.textContent = 0;
+    playSoundOnRestart();
     stopAndClearTimer();
     clearField();
     createField(cellValue,cellValue, minesValue);
@@ -108,6 +130,7 @@ const select = document.getElementById("select");
 select.oninput = function() {
     cellValue = this.value;
     clickCount.textContent = 0;
+    playSoundOnRestart();
     stopAndClearTimer();
     clearField();
     createField(cellValue,cellValue, minesValue )
@@ -121,6 +144,60 @@ export function stopTimer(){
     clearInterval(timerId)   
 }
 
+export function playSoundOnClickCell(){
+    if(mute.checked){
+        return
+    } else{
+        let audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = './c4.mp3';
+        audio.play();
+    }
+
+}
+ function playSoundOnRestart(){
+    if(mute.checked){
+        return
+    } else{
+        let audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = './hos2.mp3';
+       audio.play(); 
+    }  
+}
+export function playSoundOnClickBomb(){
+    if(mute.checked){
+        return
+    } else{
+        let audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = './bomb.mp3';
+        audio.play();
+    }
+
+}
+export function playSoundOnRightClick(){
+    if(mute.checked){
+        return
+    } else{
+        let audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = './flag.mp3';
+        audio.play();
+    }
+
+}
+export function playSoundWin(){
+    if(mute.checked){
+        return
+    } else{
+        let audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = './win.mp3';
+        audio.play();
+    }
+
+}
 
 createField()
 showWinResult();
