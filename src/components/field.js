@@ -139,7 +139,7 @@ function saveWinResult(){
   if(leaderBoardArr.length > 10){
     leaderBoardArr.shift();
   };
-  for(let i = 0; i<leaderBoardArr.length; i++){
+   for(let i = 0; i<leaderBoardArr.length; i++){
       localStorage.setItem(`${i + 1}`, JSON.stringify(leaderBoardArr[i]))
   }
   showWinResult()
